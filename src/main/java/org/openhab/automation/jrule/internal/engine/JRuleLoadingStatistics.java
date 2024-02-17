@@ -21,6 +21,7 @@ public class JRuleLoadingStatistics {
     private int numChannelTriggers;
     private int numItemStateTriggers;
     private int numTimedTriggers;
+    private int numStartupTriggers;
 
     private int numThingTriggers;
     private int numRuleClasses;
@@ -47,6 +48,10 @@ public class JRuleLoadingStatistics {
 
     public void addTimedTrigger() {
         numTimedTriggers++;
+    }
+
+    public void addStartupTrigger() {
+        numStartupTriggers++;
     }
 
     public void addRuleClass() {
@@ -88,6 +93,11 @@ public class JRuleLoadingStatistics {
         b.append("********   ");
         b.append(String.format("Loaded %d timed triggers, change %d", numTimedTriggers,
                 previous == null ? 0 : numTimedTriggers - previous.numTimedTriggers));
+
+        b.append("\n");
+        b.append("********   ");
+        b.append(String.format("Loaded %d startup triggers, change %d", numStartupTriggers,
+                previous == null ? 0 : numStartupTriggers - previous.numStartupTriggers));
 
         b.append("\n");
         b.append("********   ");
