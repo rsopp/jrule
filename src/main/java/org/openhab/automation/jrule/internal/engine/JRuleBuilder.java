@@ -28,6 +28,7 @@ import org.openhab.automation.jrule.internal.engine.excutioncontext.JRuleItemExe
 import org.openhab.automation.jrule.internal.engine.excutioncontext.JRuleItemReceivedCommandExecutionContext;
 import org.openhab.automation.jrule.internal.engine.excutioncontext.JRuleItemReceivedUpdateExecutionContext;
 import org.openhab.automation.jrule.internal.engine.excutioncontext.JRulePreconditionContext;
+import org.openhab.automation.jrule.internal.engine.excutioncontext.JRuleStartupExecutionContext;
 import org.openhab.automation.jrule.internal.engine.excutioncontext.JRuleThingExecutionContext;
 import org.openhab.automation.jrule.internal.engine.excutioncontext.JRuleTimeTimerExecutionContext;
 import org.openhab.automation.jrule.internal.engine.excutioncontext.JRuleTimedCronExecutionContext;
@@ -55,6 +56,7 @@ public class JRuleBuilder {
 
     final private List<PreCondition> preConditions = new ArrayList<>();
 
+    private boolean whenStartupTrigger = false;
     final private List<WhenThingTrigger> whenThingTriggers = new ArrayList<>();
     final private List<WhenChannelTrigger> whenChannelTriggers = new ArrayList<>();
     final private List<WhenItemReceivedCommand> whenItemReceivedCommandTriggers = new ArrayList<>();
@@ -101,6 +103,11 @@ public class JRuleBuilder {
 
     public JRuleBuilder preCondition(String itemName, Condition condition) {
         preConditions.add(new PreCondition(itemName, condition));
+        return this;
+    }
+
+    public JRuleBuilder whenStartupTrigger() {
+        whenStartupTrigger = true;
         return this;
     }
 
@@ -241,6 +248,15 @@ public class JRuleBuilder {
             ruleModuleEntry.addJRuleWhenTimeTrigger(context);
             addedToContext.set(true);
         });
+
+        if (whenStartupTrigger) {
+            JRuleStartupExecutionContext context = new JRuleStartupExecutionContext(uid, logName, loggingTags,
+                    invocationCallback, preconditionContexts, null, null);
+            jRuleEngine.addToContext(context, enableRule);
+            jRuleEngine.ruleLoadingStatistics.addStartupTrigger();
+            ruleModuleEntry.addJRuleWhenStartupTrigger(context);
+            addedToContext.set(true);
+        }
 
         jRuleEngine.ruleProvider.add(ruleModuleEntry);
 
