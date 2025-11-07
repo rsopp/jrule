@@ -6,14 +6,14 @@
   <parent>
     <groupId>org.openhab.addons.bundles</groupId>
     <artifactId>org.openhab.addons.reactor.bundles</artifactId>
-    <version>5.0.0</version>
+    <version>5.0.1</version>
   </parent>
   <artifactId>org.openhab.automation.jrule</artifactId>
-  <version>5.0.0-SNAPSHOT</version>
+  <version>5.0.1-SNAPSHOT</version>
   <name>openHAB Add-ons :: Bundles :: Standalone Java Rules Automation</name>
 
   <properties>
-    <testcontainers.version>1.20.4</testcontainers.version>
+    <testcontainers.version>1.21.3</testcontainers.version>
     <bnd.importpackage>com.sun.org.apache.xml.internal.utils.*;resolution:=optional,\
       com.sun.org.apache.xpath.internal.*;resolution:=optional,\
       org.apache.log.*;resolution:=optional,\
@@ -67,7 +67,7 @@
     <dependency>
       <groupId>org.wiremock</groupId>
       <artifactId>wiremock</artifactId>
-      <version>3.8.0</version>
+      <version>3.13.1</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
@@ -79,8 +79,19 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-inline</artifactId>
-      <version>4.8.1</version>
+      <version>5.2.0</version>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>net.bytebuddy</groupId>
+          <artifactId>byte-buddy</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy</artifactId>
+      <version>1.14.17</version>
     </dependency>
     <dependency>
       <groupId>javax.el</groupId>
