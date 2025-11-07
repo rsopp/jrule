@@ -32,6 +32,7 @@ import org.openhab.core.library.items.*;
 import org.openhab.core.library.types.*;
 import org.openhab.core.library.unit.Units;
 import org.openhab.core.types.State;
+import org.openhab.core.types.UnDefType;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.ComponentContext;
 
@@ -93,7 +94,7 @@ public class JRuleItemTestUtils {
                 JRuleCallGroupItem.class));
         items.add(
                 Pair.of(createGroupItem(ImageItem.class, new RawType(new byte[0], "jpeg")), JRuleImageGroupItem.class));
-        // items.add(Pair.of(createGroupItem(null, null), JRuleUnspecifiedGroupItem.class)); // TODO find better solution
+        items.add(Pair.of(createGroupItem(null, UnDefType.NULL), JRuleUnspecifiedGroupItem.class));
         return items;
     }
 
